@@ -546,11 +546,13 @@ export class N8nServiceStack extends Stack {
       // Update container environment with ALB DNS name
       n8nContainer.addEnvironment(
         "WEBHOOK_URL",
-        `http://${alb.loadBalancerDnsName}`
+        //`http://${alb.loadBalancerDnsName}`
+        "https://n8n.scratch.webgains.team"
       );
       n8nContainer.addEnvironment(
         "N8N_WEBHOOK_URL",
-        `http://${alb.loadBalancerDnsName}`
+        //`http://${alb.loadBalancerDnsName}`
+        "https://n8n.scratch.webgains.team"
       );
 
       // // Add listener and target group
