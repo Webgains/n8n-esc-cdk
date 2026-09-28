@@ -375,7 +375,7 @@ export class N8nServiceStack extends Stack {
         N8N_METRICS: "true",
         N8N_COMMUNITY_PACKAGES_ENABLED: "true",
         N8N_COMMUNITY_PACKAGES_PREVIEW: "true",
-        GENERIC_TIMEZONE: "America/New_York",
+        GENERIC_TIMEZONE: "Europe/London",
         N8N_RUNNERS_ENABLED: "true",
         N8N_LOG_LEVEL: "debug",
         EXECUTIONS_MODE: "queue",
