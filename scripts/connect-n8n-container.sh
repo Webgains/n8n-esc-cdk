@@ -3,10 +3,10 @@
 # Exit on error
 set -e
 
-export AWS_REGION=us-east-1
-export AWS_PROFILE=aws-profile
+export AWS_REGION=eu-west-2
+export AWS_PROFILE="scratch"
 export SERVICE_NAME=n8n-service
-export PREFIX=stgw
+export PREFIX=stg
 export CLUSTER_NAME=n8n-${PREFIX}-workflow-cluster
 
 # Debug AWS CLI version and configuration
@@ -19,7 +19,7 @@ aws configure list --profile  $AWS_PROFILE
 echo "Listing tasks..."
 TASK_ARN=$(aws ecs list-tasks \
     --profile  $AWS_PROFILE\
-    --region us-east-1 \
+    --region $AWS_REGION \
     --cluster ${CLUSTER_NAME} \
     --output json | jq --raw-output '.taskArns[0]')
 
@@ -34,7 +34,7 @@ echo "Connecting to task: ${TASK_ARN}"
 # # # Execute command
 aws ecs execute-command \
     --profile  $AWS_PROFILE \
-    --region us-east-1 \
+    --region $AWS_REGION \
     --cluster ${CLUSTER_NAME} \
     --task ${TASK_ARN} \
     --container "n8n" \
