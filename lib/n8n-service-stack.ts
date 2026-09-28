@@ -384,6 +384,7 @@ export class N8nServiceStack extends Stack {
         QUEUE_BULL_REDIS_PORT: redisPort,
         QUEUE_BULL_REDIS_USERNAME: "default",
         OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: "true",
+        NODES_EXCLUDE: "[]",
         // Configure S3 storage for n8n
         // N8N_BINARY_DATA_MANAGER: "s3",
         // N8N_AVAILABLE_BINARY_DATA_MODES: "s3",
