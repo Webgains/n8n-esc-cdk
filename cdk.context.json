@@ -1,13 +1,29 @@
 {
-  "account": "AWS_ACCOUNT_ID",
-  "region": "us-east-1",
+  "account": "980951834475",
+  "region": "eu-west-2",
   "rdsCreate": "false",
-  "availability-zones:account=AWS_ACCOUNT_ID:region=us-east-1": [
-    "us-east-1a",
-    "us-east-1b",
-    "us-east-1c",
-    "us-east-1d",
-    "us-east-1e",
-    "us-east-1f"
-  ]
+  "availability-zones:account=980951834475:region=eu-west-2": [
+    "eu-west-2a",
+    "eu-west-2b",
+    "eu-west-2c"
+  ],
+  "ssm:account=980951834475:parameterName=/n8n/dev/Database/ClientSecurityGroupId:region=eu-west-2": "sg-0fbf61939f69a372e",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Database/ListenerSecurityGroupId:region=eu-west-2": "sg-02e91cce29182baca",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Efs/ClientSecurityGroupId:region=eu-west-2": "sg-0a02e6303fd6f67a9",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Efs/Id:region=eu-west-2": "fs-0c9be7eedff32d7fd",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Efs/PostgresAccessPointId:region=eu-west-2": "fsap-0931dc2aad8ac9430",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Efs/RedisAccessPointId:region=eu-west-2": "fsap-026447f7dec98eacc",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Efs/N8nAccessPointId:region=eu-west-2": "fsap-0969ce3044025972f",
+  "acknowledged-issue-numbers": [
+    34892
+  ],
+  "ssm:account=980951834475:parameterName=/n8n/dev/Ecs/ClusterName:region=eu-west-2": "n8n-stg-workflow-cluster",
+  "ssm:account=980951834475:parameterName=/n8n/dev/ServiceDiscovery/NamespaceId:region=eu-west-2": "ns-kquyv2otxcecadrn",
+  "ssm:account=980951834475:parameterName=/n8n/dev/ServiceDiscovery/NamespaceName:region=eu-west-2": "n8n-stg.internal",
+  "ssm:account=980951834475:parameterName=/n8n/dev/ServiceDiscovery/NamespaceArn:region=eu-west-2": "arn:aws:servicediscovery:eu-west-2:980951834475:namespace/ns-kquyv2otxcecadrn",
+  "ssm:account=980951834475:parameterName=/n8n/dev/PostgreSQL/Host:region=eu-west-2": "postgres.n8n-stg.internal",
+  "ssm:account=980951834475:parameterName=/n8n/dev/PostgreSQL/Port:region=eu-west-2": "5432",
+  "ssm:account=980951834475:parameterName=/n8n/dev/PostgreSQL/N8nDatabase:region=eu-west-2": "n8n",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Redis/Host:region=eu-west-2": "redis.n8n-stg.internal",
+  "ssm:account=980951834475:parameterName=/n8n/dev/Redis/Port:region=eu-west-2": "6379"
 }
