@@ -360,7 +360,7 @@ export class N8nServiceStack extends Stack {
 
     // Shared container configuration for n8n services
     const sharedN8nConfig = {
-      image: ContainerImage.fromRegistry("docker.n8n.io/n8nio/n8n"),
+      image: ContainerImage.fromRegistry("docker.n8n.io/n8nio/n8n:2.41.2"),
       essential: true,
       environment: {
         DB_TYPE: "postgresdb",
