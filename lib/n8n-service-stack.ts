@@ -360,7 +360,7 @@ export class N8nServiceStack extends Stack {
 
     // Shared container configuration for n8n services
     const sharedN8nConfig = {
-      image: ContainerImage.fromRegistry("docker.n8n.io/n8nio/n8n"),
+      image: ContainerImage.fromRegistry("docker.n8n.io/n8nio/n8n:2.41.2"),
       essential: true,
       environment: {
         DB_TYPE: "postgresdb",
@@ -375,7 +375,7 @@ export class N8nServiceStack extends Stack {
         N8N_METRICS: "true",
         N8N_COMMUNITY_PACKAGES_ENABLED: "true",
         N8N_COMMUNITY_PACKAGES_PREVIEW: "true",
-        GENERIC_TIMEZONE: "America/New_York",
+        GENERIC_TIMEZONE: "Europe/London",
         N8N_RUNNERS_ENABLED: "true",
         N8N_LOG_LEVEL: "debug",
         EXECUTIONS_MODE: "queue",
@@ -384,6 +384,7 @@ export class N8nServiceStack extends Stack {
         QUEUE_BULL_REDIS_PORT: redisPort,
         QUEUE_BULL_REDIS_USERNAME: "default",
         OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: "true",
+        NODES_EXCLUDE: "[]",
         // Configure S3 storage for n8n
         // N8N_BINARY_DATA_MANAGER: "s3",
         // N8N_AVAILABLE_BINARY_DATA_MODES: "s3",
@@ -545,11 +546,13 @@ export class N8nServiceStack extends Stack {
       // Update container environment with ALB DNS name
       n8nContainer.addEnvironment(
         "WEBHOOK_URL",
-        `http://${alb.loadBalancerDnsName}`
+        //`http://${alb.loadBalancerDnsName}`
+        "https://n8n.scratch.webgains.team"
       );
       n8nContainer.addEnvironment(
         "N8N_WEBHOOK_URL",
-        `http://${alb.loadBalancerDnsName}`
+        //`http://${alb.loadBalancerDnsName}`
+        "https://n8n.scratch.webgains.team"
       );
 
       // // Add listener and target group
