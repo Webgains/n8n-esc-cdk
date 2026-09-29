@@ -116,6 +116,7 @@ echo "Updating $STACK_FILE to $version and deploying."
 # iam-assume is sourced into this shell and reads unset vars (IA_EC2), so it
 # cannot run under `set -euo pipefail`.
 set +eu +o pipefail
+# shellcheck disable=SC1091
 source iam-assume --retry role scratch.dev-full-access
 set -euo pipefail
 
