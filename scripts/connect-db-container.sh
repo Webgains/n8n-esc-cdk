@@ -21,6 +21,7 @@ TASK_ARN=$(aws ecs list-tasks \
     --profile $AWS_PROFILE\
     --region $AWS_REGION \
     --cluster ${CLUSTER_NAME} \
+    --service-name ${SERVICE_NAME} \
     --output json | jq --raw-output '.taskArns[0]')
 
 # # Check if task ARN is empty
