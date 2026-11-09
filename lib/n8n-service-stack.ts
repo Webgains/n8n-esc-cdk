@@ -29,6 +29,7 @@ import {
 import { IVpc } from "aws-cdk-lib/aws-ec2";
 import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import { ParameterHelper } from "@/utils/parameter-helper";
+import { N8N_IMAGE } from "@/utils/n8n-image";
 import {
   PrivateDnsNamespace,
   DnsRecordType,
@@ -360,7 +361,7 @@ export class N8nServiceStack extends Stack {
 
     // Shared container configuration for n8n services
     const sharedN8nConfig = {
-      image: ContainerImage.fromRegistry("docker.n8n.io/n8nio/n8n:2.41.2"),
+      image: ContainerImage.fromRegistry(N8N_IMAGE),
       essential: true,
       environment: {
         DB_TYPE: "postgresdb",

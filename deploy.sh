@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-STACK_FILE="lib/n8n-service-stack.ts"
+IMAGE_FILE="utils/n8n-image.ts"
 AGENT_MODEL="${AGENT_MODEL:-composer-2.5-fast}"
 pre_release=false
 
@@ -15,9 +15,11 @@ version_gt() {
     [[ "$a" != "$b" && "$(printf '%s\n%s\n' "$a" "$b" | sort -V | tail -n1)" == "$a" ]]
 }
 
-current_version=$(grep -oE 'n8nio/n8n:[^"]+' "$STACK_FILE" | head -n 1 | cut -d: -f2)
+# `|| true` so a miss reaches the message below. Under `set -o pipefail` a
+# grep with no match exits 1 and would otherwise end the script with no output.
+current_version=$(grep -oE 'n8nio/n8n:[^"]+' "$IMAGE_FILE" | head -n 1 | cut -d: -f2 || true)
 if [[ -z "$current_version" ]]; then
-    echo "Could not detect current n8n version in $STACK_FILE. Exiting."
+    echo "Could not detect current n8n version in $IMAGE_FILE. Exiting."
     exit 1
 fi
 
@@ -111,7 +113,7 @@ cursor agent -p --mode ask --trust --model "$AGENT_MODEL" --workspace "$work" \
 
 echo
 echo "----------------------------------------"
-echo "Updating $STACK_FILE to $version and deploying."
+echo "Updating $IMAGE_FILE to $version and deploying."
 
 # iam-assume is sourced into this shell and reads unset vars (IA_EC2), so it
 # cannot run under `set -euo pipefail`.
@@ -125,6 +127,6 @@ if ! aws sts get-caller-identity >/dev/null 2>&1; then
     exit 1
 fi
 
-sed -i "s|image: ContainerImage.fromRegistry(\"docker.n8n.io/n8nio/n8n:[^\"]*\")|image: ContainerImage.fromRegistry(\"docker.n8n.io/n8nio/n8n:$version\")|g" "$STACK_FILE"
+sed -i "s|docker.n8n.io/n8nio/n8n:[^\"']*|docker.n8n.io/n8nio/n8n:$version|" "$IMAGE_FILE"
 
-npx cdk deploy --require-approval never --context environment=dev N8nDevN8NServiceStack
+npx cdk deploy --require-approval never --context environment=dev N8nDevN8NServiceStack N8nDevBackupStack

@@ -10,6 +10,7 @@ import { BastionServerStack } from "../lib/bastion-stack";
 import { N8nDatabaseStack } from "../lib/n8n-database-stack";
 import { N8nRedisStack } from "../lib/n8n-redis-stack";
 import { N8nServiceStack } from "../lib/n8n-service-stack";
+import { N8nBackupStack } from "../lib/n8n-backup-stack";
 
 const app = new App();
 
@@ -113,3 +114,12 @@ const serviceStack = new N8nServiceStack(app, `${stackName}N8NServiceStack`, {
 });
 serviceStack.addDependency(databaseStack);
 serviceStack.addDependency(redisStack);
+
+const backupStack = new N8nBackupStack(app, `${stackName}BackupStack`, {
+  prefix: `n8n-${appEnvironment}`,
+  parameterHelper,
+  vpc: netStack.vpc,
+  env: env,
+});
+backupStack.addDependency(databaseStack);
+backupStack.addDependency(ecsClusterStack);
