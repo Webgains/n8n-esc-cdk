@@ -20,6 +20,18 @@ The infrastructure consists of:
 
 For a detailed diagram in Mermaid format, see [architecture-diagram.md](architecture-diagram.md)
 
+## Postgres backups
+
+Workflows, credentials, and users are stored in the Postgres `n8n` database. A Fargate task on the workflow cluster runs `pg_dump` every day at 02:15 UTC and uploads a custom-format dump to:
+
+`s3://n8n-<environment>-backups-<account>/postgres/n8n/YYYY/MM/DD/n8n-YYYYMMDDTHHMMSSZ.dump`
+
+Current objects expire after 30 days. The n8n encryption key stays in Secrets Manager and is not written to the bucket.
+
+A second task runs at 02:30 UTC with the n8n CLI (`n8n export:workflow --backup` and `n8n export:credentials --backup`). It uploads readable JSON to `s3://n8n-<environment>-backups-<account>/cli/YYYY/MM/DD/`, with `workflows/` and `credentials/` folders. Credentials stay encrypted, so restoring them needs the same encryption key from Secrets Manager.
+
+To restore, download a dump and load it into the existing n8n database with `pg_restore`, then start n8n with the encryption key already in Secrets Manager.
+
 ## Useful commands
 
 - `npm run build` compile typescript to js
@@ -65,6 +77,7 @@ Bootstrap AWS account for CDK `cdk bootstrap`
 
  7.N8nDevServiceRedisStack
  8.N8nDevN8NServiceStack
+ 9.N8nDevBackupStack
 ````
 
 - Deploy stack `cdk -c environment=dev deploy N8nDevNetworkStack`
